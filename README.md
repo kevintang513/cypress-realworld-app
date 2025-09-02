@@ -41,6 +41,8 @@ A payment application to demonstrate <strong>real-world</strong> usage of <a hre
 >
 > This application is purely for demonstration and educational purposes. Its setup and configuration resemble typical real-world applications, but it's not a full-fledged production system. Use this app to learn, experiment, tinker, and practice application testing with Cypress.
 >
+> This is a simple verification change to test PR creation workflow.
+>
 > Happy Testing!
 
 ---
