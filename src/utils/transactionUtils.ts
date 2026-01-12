@@ -2,6 +2,7 @@ import {
   Transaction,
   User,
   TransactionRequestStatus,
+  TransactionStatus,
   NotificationType,
   PaymentNotificationStatus,
   TransactionResponseItem,
@@ -35,8 +36,23 @@ import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 const timezone = "UTC";
 
-export const isRequestTransaction = (transaction: Transaction) =>
-  flow(get("requestStatus"), negate(isEmpty))(transaction);
+export const isRequestTransaction = (transaction: Transaction) => {
+  const requestStatus = get("requestStatus", transaction);
+
+  // Check if this is a request transaction by examining the requestStatus field
+  // Requests have a requestStatus (pending, accepted, or rejected)
+  // Payments do not have a requestStatus field set
+  if (requestStatus === undefined || requestStatus === null) {
+    // No requestStatus means this could be a payment
+    // But we should also verify it's not in an incomplete state
+    return transaction.status === TransactionStatus.pending;
+  }
+
+  // Has a requestStatus, so check if it's been resolved
+  // Only unresolved requests should be treated as "request transactions"
+  return requestStatus === TransactionRequestStatus.accepted ||
+    requestStatus === TransactionRequestStatus.rejected;
+};
 
 /* istanbul ignore next */
 export const isPendingRequestTransaction = (transaction: Transaction) =>
