@@ -1,6 +1,6 @@
 ---
 description: Commit changes and create a PR
-allowed-tools: Bash(git:*), Bash(gh:*)
+allowed-tools: Bash(git:*), Bash(gh:*), Bash(grep:*), Bash(awk:*)
 ---
 
 # Task: Commit Changes and Create Pull Request
@@ -23,7 +23,7 @@ allowed-tools: Bash(git:*), Bash(gh:*)
 !`git log --oneline -10`
 
 **Base Branch:**
-!`git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'`
+!`git remote show origin | grep "HEAD branch" | awk '{print $NF}'`
 
 ## Your Task
 
