@@ -1,6 +1,6 @@
 ---
 description: Commit changes and create a PR
-allowed-tools: Bash(git:*), Bash(gh:*), Bash(grep:*), Bash(awk:*)
+allowed-tools: Bash
 ---
 
 # Task: Commit Changes and Create Pull Request
